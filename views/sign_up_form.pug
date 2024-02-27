@@ -1,15 +1,22 @@
-h1=title 
+extends layout
 
-form(method='POST')
-  div.form-group 
-    label(for="first_name") First Name:
-    input#first_name.form-control(type='text', placeholder='First Name' name='first_name' required)
-    label(for="family_name") Family Name:
-    input#family_name.form-control(type='text', placeholder='Family Name' name='family_name' required)
-    label(for="email") Email: 
-    input#email.form-control(type='email' placeholder='Email' name='email' required)
-    label(for="password") Password: 
-    input#password.form-control(type='password' placeholder='Password' name='password' required)
-    label(for="confirm_password") Confirm Password: 
-    input#confirm_password.form-control(type='password' placeholder='Confirm Password' name='confirm_password' required)
-  button.btn.btn-primary(type='submit') Submit
+block content
+  h1=title
+
+  form(method='POST')
+    div.form-group 
+      label(for="first_name") First Name:
+      input#first_name.form-control(type='text', placeholder='First Name' name='first_name' required)
+    div.form-group
+      label(for="family_name") Family Name:
+      input#family_name.form-control(type='text', placeholder='Family Name' name='family_name' required)
+    div.form-group
+      label(for="email") Email: 
+      input#email.form-control(type='email' placeholder='Email' name='email' required)
+    div.form-group
+      label(for="password") Password: 
+      input#password.form-control(type='password' placeholder='Password' name='password' required)
+    div.form-group
+      label(for="confirm_password") Confirm Password: 
+      input#confirm_password.form-control(type='password' placeholder='Confirm Password' name='confirm_password' required)
+    button.btn.btn-primary(type='submit') Submit
