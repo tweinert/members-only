@@ -20,3 +20,8 @@ block content
       label(for="confirm_password") Confirm Password: 
       input#confirm_password.form-control(type='password' placeholder='Confirm Password' name='confirm_password' required)
     button.btn.btn-primary(type='submit') Submit
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg

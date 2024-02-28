@@ -30,22 +30,44 @@ exports.sign_up_post = [
     .trim()
     .isLength({ min: 6 })
     .escape(),
+  body("confirm_password")
+    .trim()
+    .isLength({ min: 6 })
+    .withMessage("Password must be a minimum of 6 characters long")
+    .custom((value, {req, loc, path}) => {
+      if (value !== req.body.password) {
+        throw new Error("Passwords dont match");
+      } else {
+        return value;
+      }
+    })
+    .escape(),
 
   asyncHandler(async (req, res, next) => {
-    bcrypt.hash(req.body.password, 10, async(err, hashedPassword) => {
-      if (err) {
-        return next(err);
-      }
-      const user = new User({
-        first_name: req.body.first_name,
-        family_name: req.body.family_name,
-        email: req.body.email,
-        password: hashedPassword,
-        membership_status: "Inactive"
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.render("sign_up_form", {
+      title: "Sign Up",
+      errors: errors.array(),
       });
-      const result = await user.save();
-      res.redirect("/");
-    });
+      return;
+    } else {
+      bcrypt.hash(req.body.password, 10, async(err, hashedPassword) => {
+        if (err) {
+          return next(err);
+        }
+        const user = new User({
+          first_name: req.body.first_name,
+          family_name: req.body.family_name,
+          email: req.body.email,
+          password: hashedPassword,
+          membership_status: "Inactive"
+        });
+        const result = await user.save();
+        res.redirect("/");
+      });
+    }
   }),
 ];
 
