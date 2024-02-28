@@ -46,10 +46,19 @@ exports.sign_up_post = [
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
 
+    // create User without hashed password in case of re-render due to error
+    const userNoPass = new User({
+      first_name: req.body.first_name,
+      family_name: req.body.family_name,
+      email: req.body.email,
+      membership_status: "Inactive"
+    })
+
     if (!errors.isEmpty()) {
       res.render("sign_up_form", {
-      title: "Sign Up",
-      errors: errors.array(),
+        title: "Sign Up",
+        user: userNoPass,
+        errors: errors.array(),
       });
       return;
     } else {
