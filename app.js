@@ -12,7 +12,7 @@ const bcrypt = require("bcryptjs");
 const bodyParser = require("body-parser");
 
 var indexRouter = require('./routes/index');
-const loginRouter = require('./routes/login');
+// const loginRouter = require('./routes/login');
 var usersRouter = require('./routes/users');
 
 var app = express();
@@ -77,7 +77,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/login', loginRouter);
+// app.use('/login', loginRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler

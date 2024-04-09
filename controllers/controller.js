@@ -81,6 +81,12 @@ exports.sign_up_post = [
   }),
 ];
 
+exports.login_get = asyncHandler(async (req, res, next) => {
+  const errorMessage = 
+    req.query.error === "invalid" ? "Invalid username or password" : null;
+  res.render("log_in_form", { title: "Log In", user: req.user, errors: errorMessage });
+});
+
 exports.membership_get = asyncHandler(async (req, res, next) => {
   res.send("NOT IMPLEMENTED: membership GET");
 });
