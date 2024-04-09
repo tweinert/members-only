@@ -1,0 +1,19 @@
+extends layout 
+
+block content 
+  h1=title 
+
+  if user
+    p Hello #{user.email}
+  form(action="/login" method="POST")
+    div.form-group 
+      label(for="email") Email:
+      input#email.form-control(type="email" placeholder="Email" name="email" required)
+    div.form-group 
+      label(for="password") Password: 
+      input#password.form-control(type="password" placeholder="Password" name="password" required)
+    button.btn.btn-primary(type='submit') Submit
+    
+  hr 
+  if errors
+    p #{errors}

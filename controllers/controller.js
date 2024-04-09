@@ -3,13 +3,14 @@ const Message = require("../models/message");
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
+const passport = require("passport");
 
 exports.index = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Site Home Page");
+  res.send("NOT IMPLEMENTED: Site Home Page", { user: req.user });
 });
 
 exports.sign_up_get = asyncHandler(async (req, res, next) => {
-  res.render("sign_up_form", { title: "Sign Up" });
+  res.render("sign_up_form", { title: "Sign Up", user: req.user });
 });
 
 exports.sign_up_post = [
@@ -80,18 +81,19 @@ exports.sign_up_post = [
   }),
 ];
 
-exports.log_in_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: log in GET");
-});
-
-exports.log_in_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: log in POST");
-});
-
 exports.membership_get = asyncHandler(async (req, res, next) => {
   res.send("NOT IMPLEMENTED: membership GET");
 });
 
 exports.membership_post = asyncHandler(async (req, res, next) => {
   res.send("NOT IMPLEMENTED: membership POST");
+});
+
+exports.log_out_get = asyncHandler(async (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
 });
