@@ -58,7 +58,8 @@ exports.sign_up_post = [
     if (!errors.isEmpty()) {
       res.render("sign_up_form", {
         title: "Sign Up",
-        user: userNoPass,
+        user_details: userNoPass,
+        user: req.user,
         errors: errors.array(),
       });
       return;

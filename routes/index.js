@@ -23,7 +23,7 @@ router.post(
     successRedirect: "/login",
     failureRedirect: "/login?error=invalid"
   })
-);
+); 
 
 // GET request for membership form
 router.get("/membership", controller.membership_get);

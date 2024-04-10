@@ -3,8 +3,6 @@ extends layout
 block content 
   h1=title 
 
-  if user
-    p Hello #{user.email}
   form(action="/login" method="POST")
     div.form-group 
       label(for="email") Email:

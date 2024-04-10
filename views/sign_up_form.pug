@@ -3,18 +3,18 @@ extends layout
 block content
   h1=title
 
-  if user 
-    p Already signed in as #{user.email}
   form(method='POST')
     div.form-group 
       label(for="first_name") First Name:
-      input#first_name.form-control(type='text', placeholder='First Name' name='first_name' required value=(undefined===user ? '' : user.first_name))
+      input#first_name.form-control(type='text', placeholder='First Name' name='first_name' required value=(
+        undefined===user_details ? '' : user_details.first_name))
     div.form-group
       label(for="family_name") Family Name:
-      input#family_name.form-control(type='text', placeholder='Family Name' name='family_name' required value=(undefined===user ? '' : user.family_name))
+      input#family_name.form-control(type='text', placeholder='Family Name' name='family_name' required value=(
+        undefined===user_details ? '' : user_details.family_name))
     div.form-group
       label(for="email") Email: 
-      input#email.form-control(type='email' placeholder='Email' name='email' required value=(undefined===user ? '' : user.email))
+      input#email.form-control(type='email' placeholder='Email' name='email' required value=(undefined===user_details ? '' : user_details.email))
     div.form-group
       label(for="password") Password: 
       input#password.form-control(type='password' placeholder='Password' name='password' required)
