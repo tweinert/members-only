@@ -1,0 +1,11 @@
+extends layout 
+
+block content 
+  h1=title 
+
+  form(method='POST')
+    div.form-group 
+      label(for="passcode") Passcode: 
+      input#passcode.form-control(type='password' placeholder='Passcode' name='passcode' required)
+    button.btn.btn-primary(type='submit') Submit 
+  

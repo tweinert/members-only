@@ -55,7 +55,16 @@ exports.sign_up_post = [
       membership_status: "Inactive"
     })
 
-    if (!errors.isEmpty()) {
+    if (req.user) {
+      const errorUser = ["Already logged in. Please sign out before creating a new account", "Test"];
+      res.render("sign_up_form", {
+        title: "Sign Up",
+        user_details: userNoPass,
+        user: req.user,
+        errors: errorUser,
+      });
+      return;
+    } else if (!errors.isEmpty()) {
       res.render("sign_up_form", {
         title: "Sign Up",
         user_details: userNoPass,
@@ -89,7 +98,7 @@ exports.login_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.membership_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: membership GET");
+  res.render("member_form", { title: "Member", user: req.user });
 });
 
 exports.membership_post = asyncHandler(async (req, res, next) => {
