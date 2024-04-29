@@ -127,6 +127,8 @@ exports.membership_post = [
         });
         return;
       };
+      await User.findByIdAndUpdate(req.user.id, { membership_status: "Active"}, {});
+
       res.render("member_form", {
         title: "Membership",
         user: req.user,
