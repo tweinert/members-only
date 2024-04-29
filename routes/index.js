@@ -25,6 +25,12 @@ router.post(
   })
 ); 
 
+// GET request for message form
+router.get("/message", controller.message_get);
+
+// POST request for message form
+router.post("/message", controller.message_post);
+
 // GET request for membership form
 router.get("/membership", controller.membership_get);
 

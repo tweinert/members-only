@@ -97,6 +97,14 @@ exports.login_get = asyncHandler(async (req, res, next) => {
   res.render("log_in_form", { title: "Log In", user: req.user, errors: errorMessage });
 });
 
+exports.message_get = asyncHandler(async (req, res, next) => {
+  res.render("message_form", { title: "Create a Message", user: req.user });
+});
+
+exports.message_post = asyncHandler(async (req, res, next) => {
+  res.send("NOT IMPLEMENTED: Message Post", { user: req.user });
+});
+
 exports.membership_get = asyncHandler(async (req, res, next) => {
   res.render("member_form", { title: "Membership", user: req.user });
 });
