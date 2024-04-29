@@ -8,4 +8,9 @@ block content
       label(for="passcode") Passcode: 
       input#passcode.form-control(type='password' placeholder='Passcode' name='passcode' required)
     button.btn.btn-primary(type='submit') Submit 
-  
+
+  hr 
+  if message 
+    p #{message}
+  if errors
+    p #{errors}

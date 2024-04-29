@@ -98,12 +98,44 @@ exports.login_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.membership_get = asyncHandler(async (req, res, next) => {
-  res.render("member_form", { title: "Member", user: req.user });
+  res.render("member_form", { title: "Membership", user: req.user });
 });
 
-exports.membership_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: membership POST");
-});
+exports.membership_post = [
+  body("passcode", "")
+    .trim()
+    .escape(),
+  
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.render("member_form", {
+        title: "Membership",
+        user: req.user,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      const match = await bcrypt.compare(req.body.passcode, process.env.ENV_SECRET);
+      if (!match) {
+        res.render("member_form", {
+          title: "Membership",
+          user: req.user,
+          message: "Incorrect Password",
+          errors: errors.array(),
+        });
+        return;
+      };
+      res.render("member_form", {
+        title: "Membership",
+        user: req.user,
+        message: "Correct Password!",
+        errors: errors.array(),
+      });
+    }
+  })
+];
 
 exports.log_out_get = asyncHandler(async (req, res, next) => {
   req.logout((err) => {
