@@ -6,7 +6,15 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 
 exports.index = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Site Home Page", { user: req.user });
+  const messages = await Message.find()
+    .populate("user")
+    .sort({ timestamp: 1 })
+    .exec();
+
+  res.render("messages", {
+    title: "Message Board",
+    messages: messages,
+  });
 });
 
 exports.sign_up_get = asyncHandler(async (req, res, next) => {

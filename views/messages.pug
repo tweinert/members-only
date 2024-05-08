@@ -8,4 +8,6 @@ block content
     dl 
       each message in messages 
         dt #{message.title}
+        dt #{message.user}
         dd #{message.text}
+        dd #{message.timestamp}
