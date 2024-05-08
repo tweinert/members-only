@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1=title
+
+  div(style='margin-left:20px;margin-top:20px')
+
+    dl 
+      each message in messages 
+        dt #{message.title}
+        dd #{message.text}

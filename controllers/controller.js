@@ -101,9 +101,16 @@ exports.message_get = asyncHandler(async (req, res, next) => {
   res.render("message_form", { title: "Create a Message", user: req.user });
 });
 
-exports.message_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Message Post", { user: req.user });
-});
+exports.message_post = [
+  body("title", "Title must be at least 3 characters")
+    .trim()
+    .isLength({ min: 3})
+    .escape(),
+  body("text", "Message must be at least 3 characters")
+    .trim()
+    .isLength({ min: 3})
+    .escape(),
+];
 
 exports.membership_get = asyncHandler(async (req, res, next) => {
   res.render("member_form", { title: "Membership", user: req.user });
