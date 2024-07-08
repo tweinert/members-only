@@ -111,7 +111,10 @@ exports.login_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.message_get = asyncHandler(async (req, res, next) => {
-  res.render("message_form", { title: "Create a Message", user: req.user });
+  res.render("message_form", {
+    title: "Create a Message",
+    user: req.user,
+  });
 });
 
 exports.message_post = [
@@ -123,10 +126,41 @@ exports.message_post = [
     .trim()
     .isLength({ min: 3})
     .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!req.user) {
+      const errorUser = ["Need to log in to create message"];
+      res.render("message_form", {
+        title: "Create a Message",
+        user: req.user,
+        errors: errorUser,
+      });
+      return;
+    } else if (!errors.isEmpty()) {
+      res.render("message_form", {
+        title: "Create a Message",
+        user: req.user,
+        errors: errors.array(),
+      });
+    } else {
+      const message = new Message({
+        title: req.body.title,
+        text: req.body.text,
+        user: req.user
+      });
+      const result = await message.save();
+      res.redirect("/");
+    }
+  })
 ];
 
 exports.membership_get = asyncHandler(async (req, res, next) => {
-  res.render("member_form", { title: "Membership", user: req.user });
+  res.render("member_form", {
+    title: "Membership",
+    user: req.user
+  });
 });
 
 exports.membership_post = [
