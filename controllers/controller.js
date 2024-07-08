@@ -14,6 +14,7 @@ exports.index = asyncHandler(async (req, res, next) => {
   res.render("messages", {
     title: "Message Board",
     messages: messages,
+    user: req.user,
   });
 });
 
@@ -102,7 +103,11 @@ exports.sign_up_post = [
 exports.login_get = asyncHandler(async (req, res, next) => {
   const errorMessage = 
     req.query.error === "invalid" ? "Invalid username or password" : null;
-  res.render("log_in_form", { title: "Log In", user: req.user, errors: errorMessage });
+  res.render("log_in_form", {
+    title: "Log In",
+    user: req.user,
+    errors: errorMessage
+  });
 });
 
 exports.message_get = asyncHandler(async (req, res, next) => {
