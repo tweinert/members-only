@@ -6,15 +6,25 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 
 exports.index = asyncHandler(async (req, res, next) => {
-  const messages = await Message.find()
-    .populate("user")
+  const messagesArray = await Message.find({}, "title timestamp text user")
     .sort({ timestamp: 1 })
+    .populate("user")
     .exec();
-
+  
+  // used to check membership status
+  let isMember = false;
+  if (req.user) {
+    const currentUser = await User.findById(req.user.id).exec();
+    if (currentUser.membership_status === "Active") {
+      isMember = true;
+    }
+  }
+  
   res.render("messages", {
     title: "Message Board",
-    messages: messages,
+    message_list: messagesArray,
     user: req.user,
+    isMember: isMember,
   });
 });
 

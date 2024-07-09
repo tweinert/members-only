@@ -6,8 +6,12 @@ block content
   div(style='margin-left:20px;margin-top:20px')
 
     dl 
-      each message in messages 
-        dt #{message.title}
-        dt #{message.user}
-        dd #{message.text}
-        dd #{message.timestamp}
+      each message in message_list 
+        if isMember
+          dt #{message.title}
+          dt #{message.user.full_name}
+          dd #{message.text}
+          dd #{message.timestamp}
+        else 
+          dt #{message.title}
+          dd #{message.text}
