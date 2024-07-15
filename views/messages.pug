@@ -15,3 +15,6 @@ block content
         else 
           dt #{message.title}
           dd #{message.text}
+        if isAdmin
+          form(method='POST')
+            button.btn.btn-primary(type='submit') Delete Message

@@ -13,18 +13,25 @@ exports.index = asyncHandler(async (req, res, next) => {
   
   // used to check membership status
   let isMember = false;
+  let isAdmin = false;
   if (req.user) {
     const currentUser = await User.findById(req.user.id).exec();
     if (currentUser.membership_status === "Active") {
       isMember = true;
     }
+
+    if (currentUser.isAdmin) {
+      isAdmin = true;
+    }
   }
+
   
   res.render("messages", {
     title: "Message Board",
     message_list: messagesArray,
     user: req.user,
     isMember: isMember,
+    isAdmin: isAdmin,
   });
 });
 

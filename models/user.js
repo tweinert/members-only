@@ -13,6 +13,11 @@ const UserSchema = new Schema({
     enum: ["Active", "Inactive" ],
     default: "Active",
   },
+  isAdmin: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 });
 
 // Virtual for author's full name
