@@ -5,7 +5,10 @@ const controller = require("../controllers/controller");
 
 
 // GET message board home page
-router.get("/", controller.index);
+router.get("/", controller.index_get);
+
+// POST message board home page
+router.post("/", controller.index_post);
 
 // Get request for sign up form
 router.get("/signup", controller.sign_up_get);

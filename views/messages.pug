@@ -17,4 +17,5 @@ block content
           dd #{message.text}
         if isAdmin
           form(method='POST')
+            input(type='hidden' name="id" value=message._id)
             button.btn.btn-primary(type='submit') Delete Message

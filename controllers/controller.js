@@ -5,7 +5,7 @@ const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 
-exports.index = asyncHandler(async (req, res, next) => {
+exports.index_get = asyncHandler(async (req, res, next) => {
   const messagesArray = await Message.find({}, "title timestamp text user")
     .sort({ timestamp: 1 })
     .populate("user")
@@ -24,7 +24,6 @@ exports.index = asyncHandler(async (req, res, next) => {
       isAdmin = true;
     }
   }
-
   
   res.render("messages", {
     title: "Message Board",
@@ -34,6 +33,17 @@ exports.index = asyncHandler(async (req, res, next) => {
     isAdmin: isAdmin,
   });
 });
+
+exports.index_post = [
+  body("id", "Error with message id")
+    .trim()
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const message = await Message.findById(req.body.id).exec();
+    // console.log(message);
+  }),
+];
 
 exports.sign_up_get = asyncHandler(async (req, res, next) => {
   res.render("sign_up_form", { title: "Sign Up", user: req.user });
