@@ -40,9 +40,10 @@ exports.index_post = [
     .escape(),
 
   asyncHandler(async (req, res, next) => {
-    const message = await Message.findById(req.body.id).exec();
+    const message = await Message.findByIdAndDelete(req.body.id);
     // console.log(message);
-  }),
+    res.redirect("/");
+  })
 ];
 
 exports.sign_up_get = asyncHandler(async (req, res, next) => {
