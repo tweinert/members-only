@@ -41,7 +41,6 @@ exports.index_post = [
 
   asyncHandler(async (req, res, next) => {
     const message = await Message.findByIdAndDelete(req.body.id);
-    // console.log(message);
     res.redirect("/");
   })
 ];

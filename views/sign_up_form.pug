@@ -21,7 +21,12 @@ block content
     div.form-group
       label(for="confirm_password") Confirm Password: 
       input#confirm_password.form-control(type='password' placeholder='Confirm Password' name='confirm_password' required)
-    button.btn.btn-primary(type='submit') Submit
+    div.form-check 
+      input#is_admin.form-check-input(type='checkbox' name='is_admin' value="")
+      label.form-check-label(for="is_admin") Admin?
+    hr
+    div.form-group
+      button.btn.btn-primary(type='submit') Submit
   hr
   if errors
     ul
