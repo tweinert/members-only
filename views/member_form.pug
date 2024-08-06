@@ -5,13 +5,10 @@ block content
 
   form(method='POST')
     if user
-      if (user.membership_status == "Inactive")
-        div.form-group 
-          label(for="passcode") Passcode: 
-          input#passcode.form-control(type='password' placeholder='Passcode' name='passcode' required)
-        button.btn.btn-primary(type='submit') Submit 
-      else 
-        p You are already a member!
+      div.form-group 
+        label(for="passcode") Passcode: 
+        input#passcode.form-control(type='password' placeholder='Passcode' name='passcode' required)
+      button.btn.btn-primary(type='submit') Submit 
     else 
       p You must log in before becoming a member
 

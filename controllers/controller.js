@@ -20,7 +20,7 @@ exports.index_get = asyncHandler(async (req, res, next) => {
       isMember = true;
     }
 
-    if (currentUser.isAdmin) {
+    if (currentUser.is_admin) {
       isAdmin = true;
     }
   }
@@ -82,13 +82,14 @@ exports.sign_up_post = [
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
+    console.log(req.body.is_admin);
 
     // create User without hashed password in case of re-render due to error
     const userNoPass = new User({
       first_name: req.body.first_name,
       family_name: req.body.family_name,
       email: req.body.email,
-      membership_status: "Inactive"
+      membership_status: "Inactive",
     })
 
     if (req.user) {
@@ -118,7 +119,7 @@ exports.sign_up_post = [
           family_name: req.body.family_name,
           email: req.body.email,
           password: hashedPassword,
-          membership_status: "Inactive"
+          membership_status: "Inactive",
         });
         const result = await user.save();
         res.redirect("/");
@@ -207,7 +208,8 @@ exports.membership_post = [
       return;
     } else {
       const match = await bcrypt.compare(req.body.passcode, process.env.ENV_SECRET);
-      if (!match) {
+      const matchAdmin = await bcrypt.compare(req.body.passcode, process.env.ENV_ADMIN);
+      if (!match && !matchAdmin) {
         res.render("member_form", {
           title: "Membership",
           user: req.user,
@@ -215,15 +217,24 @@ exports.membership_post = [
           errors: errors.array(),
         });
         return;
-      };
-      await User.findByIdAndUpdate(req.user.id, { membership_status: "Active"}, {});
-
-      res.render("member_form", {
-        title: "Membership",
-        user: req.user,
-        message: "Correct Password!",
-        errors: errors.array(),
-      });
+      } else if (match) {
+        await User.findByIdAndUpdate(req.user.id, { membership_status: "Active"}, {});
+        res.render("member_form", {
+          title: "Membership",
+          user: req.user,
+          message: "Correct Member Password!",
+          errors: errors.array(),
+        });
+        return;
+      } else if (matchAdmin) {
+        await User.findByIdAndUpdate(req.user.id, { is_admin: true }, {});
+        res.render("member_form", {
+          title: "Membership",
+          user: req.user,
+          message: "Correct Admin Password!",
+          errors: errors.array(),
+        });
+      }
     }
   })
 ];
